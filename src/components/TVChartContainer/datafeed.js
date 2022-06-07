@@ -72,7 +72,7 @@ export default {
 		}
 	},
 	// This method is used by the charting library to get historical data for the symbol.
-	getBars: async (symbolInfo, resolution, onHistoryCallback, onErrorCallback, first) => {
+	getBars: async (symbolInfo, resolution, periodParams, onHistoryCallback, onErrorCallback) => {
 		try {
 			if (resolution === "1D") {
 				resolution = 1440;
