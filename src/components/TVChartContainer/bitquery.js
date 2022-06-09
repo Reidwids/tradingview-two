@@ -1,6 +1,6 @@
-export const endpoint = 'https://graphql.bitquery.io';    
+export const endpoint = "https://graphql.bitquery.io";
 
-export const GET_COIN_INFO =`
+export const GET_COIN_INFO = `
 {
   ethereum(network: bsc) {
     dexTrades(
@@ -28,7 +28,7 @@ export const GET_COIN_INFO =`
     }
   }
 }
-`; 
+`;
 
 export const GET_COIN_BARS = `
 {
@@ -53,4 +53,4 @@ export const GET_COIN_BARS = `
     }
   }
 }
-`; 
+`;

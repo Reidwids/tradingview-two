@@ -81,6 +81,8 @@ export default {
 				"Content-Type": "application/json",
 				"X-API-KEY": "BQYmhrk9RlFLqhJwJlGuFcUwjxwKOuiA",
 			};
+			const { from, to, firstDataRequest, countBack } = periodParams;
+			console.log("[getBars]: Method call", symbolInfo, resolution, new Date(from), new Date(to));
 			console.log(symbolInfo.ticker);
 			console.log("**************************");
 			const graphqlQuery = {
@@ -121,7 +123,11 @@ export default {
 				close: Number(el.close),
 				volume: el.volume,
 			}));
-			// console.log(bars);
+			console.log("*****************REPORT********************");
+			console.log(bars);
+			console.log("[getBars]: Method call", symbolInfo, resolution, new Date(from), new Date(to));
+			console.log(typeof bars[0].low);
+			console.log(typeof bars[0].open);
 			if (bars.length) {
 				onHistoryCallback(bars, { noData: false });
 			} else {

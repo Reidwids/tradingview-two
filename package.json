@@ -4,6 +4,7 @@
 	"type": "module",
 	"dependencies": {
 		"axios": "^0.21.1",
+		"dotenv": "^16.0.1",
 		"node-fetch": "^3.2.5",
 		"react": "^16.2.0",
 		"react-dom": "^16.2.0",
