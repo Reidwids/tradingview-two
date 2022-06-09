@@ -19,7 +19,7 @@ export default {
 		console.log("[resolveSymbol]: Method called!!");
 		const headers = {
 			"Content-Type": "application/json",
-			"X-API-KEY": "BQYmhrk9RlFLqhJwJlGuFcUwjxwKOuiA",
+			"X-API-KEY": process.env.REACT_APP_BITQUERY,
 		};
 		const graphqlQuery = {
 			operationName: "GET_COIN_INFO",
@@ -45,7 +45,7 @@ export default {
 				session: "24x7",
 				timezone: "Etc/UTC",
 				minmov: 1,
-				pricescale: 10000000,
+				pricescale: 1000,
 				has_intraday: true,
 				intraday_multipliers: ["1", "5", "15", "30", "60"],
 				has_empty_bars: true,
@@ -76,7 +76,7 @@ export default {
 			const intervalDate = new Date(currentDate - resolution * 60000 * countBack);
 			const headers = {
 				"Content-Type": "application/json",
-				"X-API-KEY": "BQYmhrk9RlFLqhJwJlGuFcUwjxwKOuiA",
+				"X-API-KEY": process.env.REACT_APP_BITQUERY,
 			};
 			const graphqlQuery = {
 				operationName: "GET_COIN_BARS",
