@@ -11,7 +11,9 @@ function getLanguageFromURL() {
 
 export class TVChartContainer extends React.PureComponent {
 	static defaultProps = {
-		symbol: "Binance:BTC/USDT",
+		chain: "Binance",
+		token1: "BTC",
+		token2: "USDT",
 		interval: "15",
 		// datafeedUrl: 'https://demo_feed.tradingview.com',
 		libraryPath: "/charting_library/",
@@ -28,13 +30,12 @@ export class TVChartContainer extends React.PureComponent {
 
 	constructor(props) {
 		super(props);
-
 		this.ref = React.createRef();
 	}
 
 	componentDidMount() {
 		const widgetOptions = {
-			symbol: this.props.symbol,
+			symbol: `${this.props.chain}:${this.props.token1}/${this.props.token2}`,
 			// BEWARE: no trailing slash is expected in feed URL
 			// datafeed: new window.Datafeeds.UDFCompatibleDatafeed(this.props.datafeedUrl),
 			datafeed: Datafeed,

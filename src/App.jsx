@@ -10,7 +10,7 @@ class App extends React.Component {
 				<header className={"App-header"}>
 					<h1 className={"App-title"}>TradingView Charting Library and React Integration Example {version()}</h1>
 				</header>
-				<TVChartContainer />
+				<TVChartContainer chain="Binance" token1="ETH" token2="USDT" />
 			</div>
 		);
 	}

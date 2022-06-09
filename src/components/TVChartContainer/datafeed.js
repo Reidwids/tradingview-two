@@ -1,6 +1,9 @@
 import axios from "axios";
 import * as Bitquery from "./bitquery";
 import { makeApiRequest, generateSymbol, parseFullSymbol } from "./helpers.js";
+import { subscribeOnStream, unsubscribeFromStream } from "./streaming.js";
+
+const lastBarsCache = new Map();
 
 async function getAllSymbols() {
 	const data = await makeApiRequest("data/v3/all/exchanges");
@@ -29,7 +32,9 @@ async function getAllSymbols() {
 }
 
 const configurationData = {
+	// supported_resolutions: ["1", "3", "5", "15", "30", "60", "1D", "1W", "1M"],
 	supported_resolutions: ["1D", "1W", "1M"],
+
 	exchanges: [
 		{
 			value: "Binance",
@@ -84,8 +89,10 @@ export default {
 			timezone: "Etc/UTC",
 			exchange: symbolItem.exchange,
 			minmov: 1,
-			pricescale: 100,
+			pricescale: 1000,
 			has_intraday: false,
+			// has_intraday: true,
+			// intraday_multipliers: ["1", "60"],
 			has_no_volume: true,
 			has_weekly_and_monthly: false,
 			supported_resolutions: configurationData.supported_resolutions,
@@ -145,6 +152,9 @@ export default {
 					];
 				}
 			});
+			if (firstDataRequest) {
+				lastBarsCache.set(symbolInfo.full_name, { ...bars[bars.length - 1] });
+			}
 			console.log(`[getBars]: returned ${bars.length} bar(s)`);
 			onHistoryCallback(bars, { noData: false });
 		} catch (error) {
@@ -152,6 +162,13 @@ export default {
 			onErrorCallback(error);
 		}
 	},
-	subscribeBars: (symbolInfo, resolution, onRealtimeCallback, subscribeID, onResetCacheNeededCallback) => {},
-	unsubscribeBars: (subscribeID) => {},
+	subscribeBars: (symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback) => {
+		console.log("[subscribeBars]: Method call with subscribeUID:", subscribeUID);
+		subscribeOnStream(symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback, lastBarsCache.get(symbolInfo.full_name));
+	},
+
+	unsubscribeBars: (subscriberUID) => {
+		console.log("[unsubscribeBars]: Method call with subscriberUID:", subscriberUID);
+		unsubscribeFromStream(subscriberUID);
+	},
 };
