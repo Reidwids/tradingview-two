@@ -11,7 +11,7 @@ function getLanguageFromURL() {
 
 export class TVChartContainer extends React.PureComponent {
 	static defaultProps = {
-		chain: "Binance",
+		exchange: "Binance",
 		token1: "BTC",
 		token2: "USDT",
 		interval: "15",
@@ -35,7 +35,7 @@ export class TVChartContainer extends React.PureComponent {
 
 	componentDidMount() {
 		const widgetOptions = {
-			symbol: `${this.props.chain}:${this.props.token1}/${this.props.token2}`,
+			symbol: `${this.props.exchange}:${this.props.token1}/${this.props.token2}`,
 			// BEWARE: no trailing slash is expected in feed URL
 			// datafeed: new window.Datafeeds.UDFCompatibleDatafeed(this.props.datafeedUrl),
 			datafeed: Datafeed,
