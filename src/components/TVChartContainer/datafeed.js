@@ -32,8 +32,8 @@ async function getAllSymbols() {
 }
 
 const configurationData = {
-	// supported_resolutions: ["1", "3", "5", "15", "30", "60", "1D", "1W", "1M"],
-	supported_resolutions: ["1D", "1W", "1M"],
+	supported_resolutions: ["1", "3", "5", "15", "30", "60", "1D", "1W", "1M"],
+	// supported_resolutions: ["1D", "1W", "1M"],
 
 	exchanges: [
 		{
@@ -90,10 +90,10 @@ export default {
 			exchange: symbolItem.exchange,
 			minmov: 1,
 			pricescale: 1000,
-			has_intraday: false,
-			// has_intraday: true,
-			// intraday_multipliers: ["1", "60"],
-			has_no_volume: true,
+			// has_intraday: false,
+			has_intraday: true,
+			intraday_multipliers: ["1", "60"],
+			// has_no_volume: true,
 			has_weekly_and_monthly: false,
 			supported_resolutions: configurationData.supported_resolutions,
 			volume_precision: 2,
@@ -124,14 +124,16 @@ export default {
 			e: parsedSymbol.exchange,
 			fsym: parsedSymbol.fromSymbol,
 			tsym: parsedSymbol.toSymbol,
-			toTs: to,
+			toTs: to ? to : "",
 			limit: 2000,
 		};
 		const query = Object.keys(urlParameters)
 			.map((name) => `${name}=${encodeURIComponent(urlParameters[name])}`)
 			.join("&");
+
+		const url = resolution === "1W" ? "data/histoweek" : resolution === "1D" ? "data/histoday" : resolution >= 60 ? "data/histohour" : "data/histominute";
 		try {
-			const data = await makeApiRequest(`data/histoday?${query}`);
+			const data = await makeApiRequest(`${url}?${query}`);
 			if ((data.Response && data.Response === "Error") || data.Data.length === 0) {
 				// "noData" should be set if there is no data in the requested period.
 				onHistoryCallback([], { noData: true });
@@ -170,5 +172,16 @@ export default {
 	unsubscribeBars: (subscriberUID) => {
 		console.log("[unsubscribeBars]: Method call with subscriberUID:", subscriberUID);
 		unsubscribeFromStream(subscriberUID);
+	},
+	getTimeScaleMarks: (symbolInfo, startDate, endDate, onDataCallback, resolution) => {
+		//optional
+		console.log("=====getTimeScaleMarks running");
+	},
+	calculateHistoryDepth: (resolution, resolutionBack, intervalBack) => {
+		//optional
+		console.log("=====calculateHistoryDepth running");
+		// while optional, this makes sure we request 24 hours of minute data at a time
+		// CryptoCompare's minute data endpoint will throw an error if we request data beyond 7 days in the past, and return no data
+		return resolution < 60 ? { resolutionBack: "D", intervalBack: "1" } : undefined;
 	},
 };

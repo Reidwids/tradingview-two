@@ -42,7 +42,7 @@ export class TVChartContainer extends React.PureComponent {
 			interval: this.props.interval,
 			container: this.ref.current,
 			library_path: this.props.libraryPath,
-
+			debug: true,
 			locale: getLanguageFromURL() || "en",
 			disabled_features: ["use_localstorage_for_settings"],
 			enabled_features: ["study_templates"],
@@ -53,6 +53,18 @@ export class TVChartContainer extends React.PureComponent {
 			fullscreen: this.props.fullscreen,
 			autosize: this.props.autosize,
 			studies_overrides: this.props.studiesOverrides,
+			time_frames: [
+				{ text: "3y", resolution: "1W", description: "3 Years", title: "3yr" },
+				{ text: "1y", resolution: "1D", description: "1 Year" },
+				{ text: "6m", resolution: "1D", description: "6 Month" },
+				{ text: "3m", resolution: "1D", description: "3 Month" },
+				{ text: "1m", resolution: "60", description: "1 Month" },
+				{ text: "1w", resolution: "60", description: "1 Week" },
+				{ text: "3d", resolution: "60", description: "3 Days" },
+				{ text: "1d", resolution: "15", description: "1 Day" },
+				{ text: "3h", resolution: "5", description: "3 Hours" },
+				{ text: "1h", resolution: "1", description: "1 Hours" },
+			],
 		};
 
 		const tvWidget = new widget(widgetOptions);
