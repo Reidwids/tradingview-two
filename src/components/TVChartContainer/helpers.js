@@ -1,12 +1,8 @@
 // Make requests to CryptoCompare API
 export async function makeApiRequest(path) {
 	try {
-		console.log("******************************");
-		console.log("PATH: ", path);
-		console.log(process.env.REACT_APP_CRYPTOCOMPARE);
-		console.log(`https://min-api.cryptocompare.com/${path}&api_key=${process.env.REACT_APP_CRYPTOCOMPARE}`);
-
-		const response = await fetch(`https://min-api.cryptocompare.com/${path}`);
+		const queryType = path === "data/v3/all/exchanges" ? "?" : "&api_key=";
+		const response = await fetch(`https://min-api.cryptocompare.com/${path}${queryType}${process.env.REACT_APP_CRYPTOCOMPARE}`);
 		return response.json();
 	} catch (error) {
 		throw new Error(`CryptoCompare request error: ${error.status}`);
