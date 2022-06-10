@@ -8,7 +8,6 @@ const lastBarsCache = new Map();
 async function getAllSymbols() {
 	const data = await makeApiRequest("data/v3/all/exchanges");
 	let allSymbols = [];
-	console.log(data);
 	for (const exchange of configurationData.exchanges) {
 		const pairs = data.Data[exchange.value].pairs;
 
@@ -26,8 +25,6 @@ async function getAllSymbols() {
 			allSymbols = [...allSymbols, ...symbols];
 		}
 	}
-	console.log("********************ALL SYMBOLS*********");
-	console.log(allSymbols);
 	return allSymbols;
 }
 
@@ -38,6 +35,11 @@ const configurationData = {
 	exchanges: [
 		{
 			value: "Binance",
+			// name: "Binance",
+			// desc: "Binance",
+		},
+		{
+			value: "Gateio",
 			// name: "Binance",
 			// desc: "Binance",
 		},
