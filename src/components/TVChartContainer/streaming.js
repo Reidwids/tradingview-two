@@ -1,6 +1,6 @@
 import { parseFullSymbol } from "./helpers.js";
 
-const socket = io("wss://streamer.cryptocompare.com");
+/*const socket = io("wss://streamer.cryptocompare.com");
 const channelToSubscription = new Map();
 
 socket.on("connect", () => {
@@ -108,3 +108,4 @@ function getNextDailyBarTime(barTime) {
 	date.setDate(date.getDate() + 1);
 	return date.getTime() / 1000;
 }
+*/
