@@ -114,9 +114,10 @@ export default {
 		console.log(requestCounter);
 
 		const { from, to, firstDataRequest, countBack } = periodParams;
-
 		const since = moment.unix(periodParams.from).utc().format("YYYY-MM-DDTHH:mm:ss") + "Z";
-		const till = moment.unix(periodParams.to).utc().format("YYYY-MM-DDTHH:mm:ss") + "Z";
+		// const till = moment.unix(periodParams.to).utc().format("YYYY-MM-DDTHH:mm:ss") + "Z";
+		const till = moment().format("YYYY-MM-DDTHH:mm:ss") + "Z";
+		console.log("today!!!!!!!!!!!!!!!!!!!!!!!!!!!!: ", till);
 
 		console.log("[getBars]: Method call", symbolInfo, resolution, from, to);
 

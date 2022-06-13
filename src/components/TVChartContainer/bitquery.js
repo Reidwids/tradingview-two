@@ -32,6 +32,8 @@ export const GET_COIN_INFO = `
 
 export const GET_COIN_BARS = (since, till, countBack) => {
 	console.log("COUNTBACKKKKKKK: ", countBack);
+	console.log("TILLLLLLLLLLLLLLLL: ", till);
+
 	return JSON.stringify({
 		query: `{
       ethereum(network: bsc) {
