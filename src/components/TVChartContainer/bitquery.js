@@ -30,12 +30,14 @@ export const GET_COIN_INFO = `
 }
 `;
 
-export const GET_COIN_BARS = (since, till) => {
-  return JSON.stringify({
-    query: `{
+export const GET_COIN_BARS = (since, till, countBack) => {
+	console.log("COUNTBACKKKKKKK: ", countBack);
+	return JSON.stringify({
+		query: `{
       ethereum(network: bsc) {
-        dexTrades(options: {asc: "timeInterval.minute", limit: 1000}, 
-          date: {since: "${since}", till:"${till}"}
+        dexTrades(
+          options: {asc: "timeInterval.minute", limit: ${countBack}}, 
+          date: {till:"${till}"},
           exchangeName: {is: "Pancake v2"}, 
           baseCurrency: {is: "0x9B3a01F8b4aBD2E2a74597B21b7C269ABf4E9f41"}, 
           quoteCurrency: {is: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"}) {
@@ -70,7 +72,7 @@ export const GET_COIN_BARS = (since, till) => {
         }
       }
     }`,
-  });
+	});
 };
 `;
 };
